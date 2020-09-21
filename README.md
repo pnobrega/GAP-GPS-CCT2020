@@ -7,18 +7,18 @@
 - [Important dates](#Dates)
 - [Contribuitors](#Contribuitors)
 
-### Introduction:
+### Introduction
 
 - CCT 2020 - Mobile Development
 - This project covers how to implement a GPS in a react native framework.
 
-### Technologies:
+### Technologies
 
 - JavaScrypt
 - NodeJS
 - ReactJS
 
-### Project status:
+### Project status
 
 - On Going
 
@@ -27,7 +27,7 @@
 - From: Monday, 14 September 2020
 - Deadline: Saturday, 10 October 2020
 
-### Contribuitors:
+### Contribuitors
 
 - Alessandro Siqueira
 - Gilberto Rodrigues
