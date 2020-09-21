@@ -23,7 +23,7 @@ export default class Gps extends Component {
 		return (
 			<View  >
 				<TouchableOpacity onPress={this.findCoordinates} style={styles.container}>
-					<Text >Find My Coords?</Text>
+					<Text >Find My Coords kct!</Text>
 					<Text>Location: {this.state.location}</Text>
 				</TouchableOpacity>
 			</View>
