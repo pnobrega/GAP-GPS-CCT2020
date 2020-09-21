@@ -20,12 +20,12 @@ export default class Gps extends Component {
 
 	render() {
 		return (
-			< >
+			<View >
 				<TouchableOpacity onPress={this.findCoordinates}>
 					<Text >Find My Coords?</Text>
 					<Text>Location: {this.state.location}</Text>
 				</TouchableOpacity>
-			</>
+			</View>
 		);
 	}
 }
