@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Alert, StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import Style from './Style/Style';
 
 export default class Gps extends Component {
 	state = {
@@ -20,8 +21,8 @@ export default class Gps extends Component {
 
 	render() {
 		return (
-			<View >
-				<TouchableOpacity onPress={this.findCoordinates}>
+			<View  >
+				<TouchableOpacity onPress={this.findCoordinates} style={styles.container}>
 					<Text >Find My Coords?</Text>
 					<Text>Location: {this.state.location}</Text>
 				</TouchableOpacity>
@@ -29,4 +30,14 @@ export default class Gps extends Component {
 		);
 	}
 }
-
+const styles = StyleSheet.create({
+	container: {
+	  flex: 1,
+	  backgroundColor: "lightgray",
+	  borderWidth:1,
+	  borderColor: '#55',
+	  width:150,
+	  alignItems: 'center',
+	  justifyContent: 'center',
+	},
+  });
