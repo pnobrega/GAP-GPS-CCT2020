@@ -7,9 +7,8 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text>Mobile Project: GPS</Text>
-      {
-        //<StatusBar style='auto' />
-      }
+      <StatusBar style='auto' />
+      
       <Gps />
     </View>
   );
