@@ -1,24 +1,18 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import Gps from './Gps';
+import {createAppContainer} from 'react-navigation';
+import {createStackNavigator} from 'react-navigation-stack';
+import MainScreen from './MainScreen';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Mobile Project: GPS</Text>
-      <StatusBar style='auto' />
-      
-      <Gps />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+const navigator = createStackNavigator(
+  {
+    Main: MainScreen,
   },
-});
+  {
+    initialRouteName:'Main',
+    defaultNavigationOptions:{
+      title: 'Project: GPS',
+    }
+  }
+);
+
+export default createAppContainer(navigator);
+

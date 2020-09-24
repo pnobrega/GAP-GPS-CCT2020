@@ -7,6 +7,7 @@ export default class Gps extends React.Component {
   constructor() {
     super();
 
+    //const [state, setState] = useState(false);
     // State object
     this.state = {
       ready: false,
@@ -84,7 +85,7 @@ export default class Gps extends React.Component {
               style={styles.title}
             >{`Latitude: ${this.state.where.lat}`}</Text>
             <br />
-            <Text
+            /* <Text
               style={styles.title}
             >{` Longitude: ${this.state.where.lng}`}</Text>
             <br />
@@ -94,7 +95,7 @@ export default class Gps extends React.Component {
             <br />
             <Text style={styles.title}>{`Speed: ${this.state.where.spe}`}</Text>
             <br />
-            <Text style={styles.title}>{"Time: " + this.localTime()}</Text>
+            <Text style={styles.title}>{"Time: " + this.localTime()}</Text>'' 
           </>
         )}
       </View>
