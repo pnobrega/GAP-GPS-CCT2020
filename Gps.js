@@ -7,6 +7,7 @@ export default class Gps extends React.Component {
   constructor() {
     super();
 
+    
     //const [state, setState] = useState(false);
     // State object
     this.state = {
