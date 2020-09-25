@@ -1,8 +1,13 @@
-import React, { Component} from "react";
-import { Alert, StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import React, { Component, useState} from "react";
+import { Alert, StyleSheet, Text, View, TouchableOpacity, Button } from "react-native";
 import Moment from "moment";
 
-export default class Gps extends React.Component {
+
+
+
+  //const [passiveMode,setPassive_mode] = useState(false);
+
+export default class Gps extends Component {
   
   state = {
     location: null,
@@ -10,6 +15,7 @@ export default class Gps extends React.Component {
     longitude:null,
     accuracy:0,
     timestamp:0,
+    passiveMode: false,
   };
   
   
@@ -32,10 +38,20 @@ export default class Gps extends React.Component {
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
     );
   };
- 
+  pressButton =()=>{
+    if (this.state.passiveMode) {
+      this.setState({passiveMode:false})
+    
+    }
+    else 
+       this.setState({passiveMode:true})
+      }
+
   render() {
-    //const accuracy_format = (this.state.accuracy|=null ? this.state.accuracy: null);
+    
     const accuracy_format = parseFloat(this.state.accuracy);
+   
+   
     return (
       <View>
         <TouchableOpacity onPress={this.getCoordinates}>
@@ -46,8 +62,15 @@ export default class Gps extends React.Component {
           <Text style={styles.title}>Longitude: {this.state.longitude}</Text>
           
           <Text style={styles.title}>Accuracy: {(accuracy_format!=0?accuracy_format.toFixed(2):null)} </Text>
-          <Text style={styles.title}>Time: {Moment(parseInt(this.state.timestamp)).format('h:mm:ss a')}</Text>
+          <Text style={styles.title}>Time: {(this.state.timestamp!=0 ? Moment(parseInt(this.state.timestamp)).format('h:mm:ss a'):null)}</Text>
         </TouchableOpacity>
+        <br/>
+        <Button
+
+          //onPress = {(this.state.passiveMode? this.setState({passiveMode:false}):this.setState({passiveMode:true}))}
+          onPress = {this.pressButton}
+          title = {'Passive Mode: '+ (this.state.passiveMode?'ON':'OFF')}
+        />
            
              {/* {  {!this.state.ready && <Text>Using Geolocation in React Native.</Text>}
               {this.state.error && <Text>{this.state.error}</Text>}
