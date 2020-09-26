@@ -1,11 +1,7 @@
-import React, { Component, useState} from "react";
+import React, { Component, useState, useEffect} from "react";
 import { Alert, StyleSheet, Text, View, TouchableOpacity, Button } from "react-native";
 import Moment from "moment";
 
-
-
-
-  //const [passiveMode,setPassive_mode] = useState(false);
 
 export default class Gps extends Component {
   
@@ -15,6 +11,7 @@ export default class Gps extends Component {
     longitude:null,
     accuracy:0,
     timestamp:0,
+    spped: null,
     passiveMode: false,
   };
   
@@ -26,12 +23,15 @@ export default class Gps extends Component {
         const latitude = JSON.stringify(position.coords.latitude);
         const longitude = JSON.stringify(position.coords.longitude);
         const accuracy = JSON.stringify(position.coords.accuracy);
+        const speed = JSON.stringify(position.coords.speed);
+
         const timestamp = JSON.stringify(position.timestamp);
         
         this.setState({ location });
         this.setState({latitude});
         this.setState({longitude});
         this.setState({accuracy});
+        this.setState({speed});
         this.setState({timestamp});
       },
       (error) => Alert.alert(error.message),
@@ -41,11 +41,37 @@ export default class Gps extends Component {
   pressButton =()=>{
     if (this.state.passiveMode) {
       this.setState({passiveMode:false})
-    
+      clearTimeout(this.clockCall);
+
     }
-    else 
-       this.setState({passiveMode:true})
+    else {
+      this.setState({passiveMode:true})
+      this.clockCall = setInterval(() => {
+        this.getCoordinates();
+      }, 1000);       
       }
+    }
+   
+     /*  componentDidMount() {
+      if(this.state.passiveMode){                        <<<<<<<<<<<<<<<<<<<<<< no IDEA HOW TO DEAL WITH IT   (YET)
+      this.clockCall = setInterval(() => {
+        this.getCoordinates();
+      }, 1000);
+     }
+    } */
+     /* componentDidUpdate(){
+      if(this.state.passiveMode){
+         console.log('componentDiUpdate') 
+       this.clockCall = setInterval(() => {     <<<<<<<<<<<<<<<<<<<<<< no IDEA HOW TO DEAL WITH IT   (YET)
+          this.getCoordinates();
+        }, 1000);
+       }
+       else{
+        clearTimeout(this.clockCall);
+
+
+       }
+      }   */
 
   render() {
     
@@ -60,41 +86,17 @@ export default class Gps extends Component {
          {/*  <Text style={styles.title}>Location: {this.state.location}</Text> */}
           <Text style={styles.title}>Latitude: {this.state.latitude}</Text>
           <Text style={styles.title}>Longitude: {this.state.longitude}</Text>
-          
           <Text style={styles.title}>Accuracy: {(accuracy_format!=0?accuracy_format.toFixed(2):null)} </Text>
+          <Text style={styles.title}>Speed: {this.state.speed}</Text>
           <Text style={styles.title}>Time: {(this.state.timestamp!=0 ? Moment(parseInt(this.state.timestamp)).format('h:mm:ss a'):null)}</Text>
-        </TouchableOpacity>
-        <br/>
+                  </TouchableOpacity>
+        
         <Button
 
-          //onPress = {(this.state.passiveMode? this.setState({passiveMode:false}):this.setState({passiveMode:true}))}
-          onPress = {this.pressButton}
+                   onPress = {this.pressButton}
           title = {'Passive Mode: '+ (this.state.passiveMode?'ON':'OFF')}
         />
-           
-             {/* {  {!this.state.ready && <Text>Using Geolocation in React Native.</Text>}
-              {this.state.error && <Text>{this.state.error}</Text>}
-              {this.state.ready && 
-              ( 
-                <>
-                  <Text
-                    style={styles.title}
-                  >{`Latitude: ${this.state.where.lat}`}</Text>
-                  <br />
-                  /* <Text
-                    style={styles.title}
-                  >{` Longitude: ${this.state.where.lng}`}</Text>
-                  <br />
-                  <Text
-                    style={styles.title}
-                  >{`accuracy: ${this.state.where.acc}`}</Text>
-                  <br />
-                  <Text style={styles.title}>{`Speed: ${this.state.where.spe}`}</Text>
-                  <br />
-                  <Text style={styles.title}>{"Time: " + this.localTime()}</Text>'' 
-                </>
-               )}  */}
-            
+                      
       </View>
     );
   }
