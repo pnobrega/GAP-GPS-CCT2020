@@ -1,15 +1,15 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import Gps from './Gps';
+import GpsSimple from './GpsSimple';
 
-export default function App() {
+export default function MainScreen() {
   return (
     <View style={styles.container}>
       <Text>Mobile Project: GPS</Text>
       <StatusBar style='auto' />
       
-      <Gps />
+      <GpsSimple />
     </View>
   );
 }
@@ -22,3 +22,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+ 
