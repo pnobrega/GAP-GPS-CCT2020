@@ -21,6 +21,8 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "description": "Mobile Project",
+    "githubUrl": "https://github.com/pnobrega/GAP-GPS-CCT2020"
   }
 }

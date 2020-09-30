@@ -1,116 +1,114 @@
-import React, { Component } from "react";
-import { render } from "react-dom";
-import { StyleSheet, Text, View } from "react-native";
-// import "./Style/style.css";
+import React, { Component, useState, useEffect} from "react";
+import { Alert, StyleSheet, Text, View, TouchableOpacity, Button } from "react-native";
+import Moment from "moment";
 
-export default class Gps extends React.Component {
-  constructor() {
-    super();
 
-    
-    //const [state, setState] = useState(false);
-    // State object
-    this.state = {
-      ready: false,
-      // Where is an object that later on will get values from the navigator
-      where: { lat: null, lng: null, acc: null, spe: null, tim: null },
-      error: null,
-    };
-  }
-
-  // Life cycle function (It is called after render based)
-  componentDidMount() {
-    let geoOptions = {
-      enableHighAccuracy: true,
-      timeOut: 20000,
-      maximumAge: 10000,
-    };
-
-    this.setState({ ready: false, error: null });
+export default class Gps extends Component {
+  
+  
+    // State object 
+    // Where is an object that later on will get values from the navigator
+  state = {
+    location: null,
+    latitude: null,
+    longitude:null,
+    accuracy:0,
+    timestamp:0,
+    speed: null,
+    passiveMode: false,
+  };
+  
+  getCoordinates = () => {
     navigator.geolocation.getCurrentPosition(
-      this.successCallback,
-      this.errorCallback,
-      geoOptions
-    );
-  }
+      (position) => {
+        // getting the specific parameters
+        const location = JSON.stringify(position); //<<< used initially for dev purposes
+        const latitude = JSON.stringify(position.coords.latitude);
+        const longitude = JSON.stringify(position.coords.longitude);
+        const accuracy = JSON.stringify(position.coords.accuracy);
+        const speed = JSON.stringify(position.coords.speed);
+        const timestamp = JSON.stringify(position.timestamp);
 
-  // In case
-  successCallback = (position) => {
-    console.log(position);
-
-    //
-    this.setState({
-      ready: true,
-      where: {
-        lat: position.coords.latitude,
-        lng: position.coords.longitude,
-        acc: position.coords.accuracy,
-        spe: position.coords.speed,
-        tim: position.timestamp,
+        // the object state get a value for each parameter bellow.
+        this.setState({location});
+        this.setState({latitude});
+        this.setState({longitude});
+        this.setState({accuracy});
+        this.setState({speed});
+        this.setState({timestamp});
       },
-    });
+      // call a error message if something goes wrong.
+      (error) => Alert.alert(error.message),
+      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+    );
   };
 
-  localTime = () => {
-    let unix_timestamp = this.state.where.tim;
-    // Create a new JavaScript Date object based on the timestamp
-    // multiplied by 1000 so that the argument is in milliseconds, not seconds.
-    let date = new Date(unix_timestamp * 1000);
-    // Hours part from the timestamp
-    let hours = date.getHours();
-    // Minutes part from the timestamp
-    let minutes = "0" + date.getMinutes();
-    // Seconds part from the timestamp
-    let seconds = "0" + date.getSeconds();
+  //function called when the button is pressed
+  pressButton =()=>{
+    // check if the button is in passive mode is true
+    // in other other, if it is true, the variable clockCall, which
+    //contains a setInterval, is stopped ("cleaned").
+    if (this.state.passiveMode) {
+      this.setState({passiveMode:false})
+      clearTimeout(this.clockCall);
 
-    // Will display time in 10:30:23 format
-    let formattedTime =
-      hours + ":" + minutes.substr(-2) + ":" + seconds.substr(-2);
-
-    return formattedTime;
-  };
-
-  // In case something goes wrong calls this function
-  errorCallback = (err) => {
-    this.setState({ error: err.message });
-  };
-
+    }
+    // If passive mode is false
+    // the variable clockcall is called, and start running
+    // setInterval, calling the function getCoordinates
+    // every 1 second.
+    else {
+      this.setState({passiveMode:true})
+      this.clockCall = setInterval(() => {
+        this.getCoordinates();
+      }, 1000);       
+      }
+    }
+   
   render() {
+    
+    // both accuracy and speed are converted to float, to be late formatted.
+    const accuracy_format = parseFloat(this.state.accuracy);
+    const speed_format = parseFloat(this.state.speed);
+   
+    
     return (
       <View>
-        {!this.state.ready && <Text>Using Geolocation in React Native.</Text>}
-        {this.state.error && <Text>{this.state.error}</Text>}
-        {this.state.ready && (
-          <>
-            <Text
-              style={styles.title}
-            >{`Latitude: ${this.state.where.lat}`}</Text>
-            <br />
-            /* <Text
-              style={styles.title}
-            >{` Longitude: ${this.state.where.lng}`}</Text>
-            <br />
-            <Text
-              style={styles.title}
-            >{`accuracy: ${this.state.where.acc}`}</Text>
-            <br />
-            <Text style={styles.title}>{`Speed: ${this.state.where.spe}`}</Text>
-            <br />
-            <Text style={styles.title}>{"Time: " + this.localTime()}</Text>'' 
-          </>
-        )}
+        <Text style={styles.title}>Using Geolocation in React Native.</Text>
+        <TouchableOpacity onPress={this.getCoordinates}>
+      {/*   for dev purposes*/ }   
+      { /* console.log(this.state.location) */ }
+          <Text style={styles.text}>Latitude: {this.state.latitude}</Text>
+          <Text style={styles.text}>Longitude: {this.state.longitude}</Text>
+      {/*  to stylish the value of accuracy, if the value is 0, the text will be blank, otherwise, it's formated to have only 2 decimal places*/}
+          <Text style={styles.text}>Accuracy: {(accuracy_format!=0?accuracy_format.toFixed(2):null)} </Text>
+      {/*  to stylish the value of speed, if the value is NAn and 'null', the text will be blank, otherwise, it's formated to have only 2 decimal places*/}    
+          <Text style={styles.text}>Speed: {(!isNaN(speed_format) ?speed_format.toFixed(2): (this.state.speed=="null"?0:null))}</Text>
+      {/* It was used an API called Moment to convert the timestamp to the format of Hours, minutes and seconds*/}
+          <Text style={styles.text}>Time: {(this.state.timestamp!=0 ? Moment(parseInt(this.state.timestamp)).format('h:mm:ss a'):null)}</Text>
+        </TouchableOpacity>
+          <View style={styles.button}>
+            <Button 
+              onPress = {this.pressButton}
+              /* if the state object has the passiveMode set to true, so the button shows ON, otherwise, OFF. */
+              title = {'Passive Mode: '+ (this.state.passiveMode?'ON':'OFF')}
+            />
+          </View>                
       </View>
     );
   }
 }
-
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 24,
-    backgroundColor: "#eaeaea",
-  },
+ 
   title: {
+    marginTop: 26,
+    paddingVertical: 8,
+    color: "#20232a",
+    textAlign: "center",
+    fontSize: 28,
+    fontWeight: "bold",
+  },
+  text: {
     marginTop: 26,
     paddingVertical: 8,
     borderWidth: 4,
@@ -122,4 +120,9 @@ const styles = StyleSheet.create({
     fontSize: 30,
     fontWeight: "bold",
   },
+  button: {
+    marginTop: 50,
+   
+  },
 });
+
