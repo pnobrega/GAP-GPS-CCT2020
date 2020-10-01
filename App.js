@@ -39,14 +39,14 @@ export default function MainScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 10,
+    flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
   },
   container_logo: {},
   logo: {
     marginTop: 25,
-    resizeMode: 'contain',
+    resizeMode: 'stretch',
     width: 250,
     height: 50,
   },
