@@ -36,7 +36,6 @@ const styles = StyleSheet.create({
 
   },
   container_logo:{
-    //flex : 2,
   },
   logo: {
     marginTop:50, 
@@ -45,28 +44,21 @@ const styles = StyleSheet.create({
     height: 80,
   },
   body: {
-    //flex: 2,
     alignItems: 'center',
     justifyContent: 'flex-end',
   },
   title:{
     fontSize:30,
-    //alignItems: 'baseline',
   },
   foot_container: {
-    //flex: -1,
     marginTop:'10%',
-    //marginBottom:10,
     width: '100%',
-    //flexDirection:'column' ,
     justifyContent: 'flex-end',
     alignItems: 'center',
     backgroundColor: '#FF8200',
-    
     },
   foot_text:{
     fontSize:12,
-  
     },
   
 });
