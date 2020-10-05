@@ -6,12 +6,12 @@
 - [Setup](#Setup)
 - [Contribuitors](#Contribuitors)
 
-### Introduction
+## Introduction
 
 - CCT 2020 - Mobile Development
-- This project covers how to implement a GPS in a react native framework.
+- This project covers how to gather information from a GPS sensor in a react native framework.
 
-### Technologies
+## Technologies
 
 - JavaScrypt
 - ReactJS
