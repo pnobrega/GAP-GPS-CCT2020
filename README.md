@@ -13,8 +13,9 @@
 
 ## Technologies
 
-- JavaScrypt
-- ReactJS
+- JavaScrypt - 6
+- React Native - 16
+- Expo - 39
 
 ## Setup
 
@@ -32,7 +33,7 @@ $ npm install
 $ npm start
 ```
 
-## Contribuitors
+## Contributors
 
 - Alessandro Siqueira
 - Gilberto Rodrigues
