@@ -3,8 +3,7 @@
 ## Table of contents
 
 - [Introduction](#Introduction)
-- [Project status](#Project-status)
-- [Important dates](#Dates)
+- [Setup](#Setup)
 - [Contribuitors](#Contribuitors)
 
 ### Introduction
@@ -15,19 +14,25 @@
 ### Technologies
 
 - JavaScrypt
-- NodeJS
 - ReactJS
 
-### Project status
+## Setup
 
-- On Going
+First clone this project to your local enviroment
 
-### Dates
+```
+$ git clone https://github.com/pnobrega/GAP-GPS-CCT2020.git
+```
 
-- From: Monday, 14 September 2020
-- Deadline: Saturday, 10 October 2020
+To run this project, install it locally using npm:
 
-### Contribuitors
+```
+$ cd ../GAP-GPS-CCT2020
+$ npm install
+$ npm start
+```
+
+## Contribuitors
 
 - Alessandro Siqueira
 - Gilberto Rodrigues
